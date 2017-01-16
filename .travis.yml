@@ -6,6 +6,7 @@ matrix:
   include:
     - compiler: gcc
       os: linux
+      dist: trusty
       addons:
         apt:
           sources:
@@ -15,6 +16,7 @@ matrix:
       env: COMPILER=g++-4.8
     - compiler: gcc
       os: linux
+      dist: trusty
       addons:
         apt:
           sources:
@@ -24,6 +26,7 @@ matrix:
       env: COMPILER=g++-4.9
     - compiler: gcc
       os: linux
+      dist: trusty
       addons:
         apt:
           sources:
@@ -33,6 +36,7 @@ matrix:
       env: COMPILER=g++-5
     - compiler: clang
       os: linux
+      dist: trusty
       addons:
         apt:
           sources:
