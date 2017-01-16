@@ -61,7 +61,10 @@ void Encode(time_t timestamp, const std::function<uint8_t()>& prng, ULID& ulid) 
 // Crockford's Base32
 std::string Encoding = "0123456789ABCDEFGHJKMNPQRSTVWXYZ";
 
-// Marshal will marshal a ULID to a std::string
+// MarshalTo will marshal a ULID to the passed character array.
+//
+// Implementation taken directly from oklog/ulid
+// (https://sourcegraph.com/github.com/oklog/ulid@0774f81f6e44af5ce5e91c8d7d76cf710e889ebb/-/blob/ulid.go#L162-190)
 //
 // timestamp:
 // dst[0]: first 3 bits of data[0]
@@ -77,10 +80,7 @@ std::string Encoding = "0123456789ABCDEFGHJKMNPQRSTVWXYZ";
 //
 // entropy:
 // follows similarly, except now all components are set to 5 bits.
-std::string Marshal(const ULID& ulid) {
-	std::string dst(26, '\0');
-
-	// https://sourcegraph.com/github.com/oklog/ulid@0774f81f6e44af5ce5e91c8d7d76cf710e889ebb/-/blob/ulid.go#L162-190
+void MarshalTo(const ULID& ulid, char dst[26]) {
 	// 10 byte timestamp
 	dst[0] = Encoding[(ulid.data[0] & 224) >> 5];
 	dst[1] = Encoding[ulid.data[0] & 31];
@@ -110,8 +110,14 @@ std::string Marshal(const ULID& ulid) {
 	dst[23] = Encoding[(ulid.data[14] & 124) >> 2];
 	dst[24] = Encoding[((ulid.data[14] & 3) << 3) | ((ulid.data[15] & 224) >> 5)];
 	dst[25] = Encoding[ulid.data[15] & 31];
+}
 
-	return dst;
+// Marshal will marshal a ULID to a std::string.
+std::string Marshal(const ULID& ulid) {
+	char data[27];
+	data[26] = '\0';
+	MarshalTo(ulid, data);
+	return std::string(data);
 }
 
 };  // namespace ulid
