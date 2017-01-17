@@ -72,6 +72,14 @@ Marshals the ulid into the passed character array.
 
 Marshals and generates std::string.
 
+### void ulid::MarshalBinaryTo(const ULID&, uint8_t[16])
+
+Marshals the ulid into the passed byte array.
+
+### std::vector<uint8_t> ulid::MarshalBinary(const ULID&)
+
+Marshals and generates std::vector<uint8_t>.
+
 ### void ulid::UnmarshalFrom(const char[26], ULID&)
 
 Unmarshals the passed character array into the ulid.
