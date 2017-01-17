@@ -91,3 +91,13 @@ TEST(Time, 1) {
 	ulid::ULID ulid = ulid::Create(1484581420, []() { return 4; });
 	ASSERT_EQ(1484581420, ulid::Time(ulid));
 }
+
+// https://github.com/oklog/ulid/blob/master/ulid_test.go#L160-L169
+TEST(AlizainCompatibility, 1) {
+	ulid::ULID ulid_got;
+	ulid::EncodeTime(uint64_t(1469918176385), ulid_got);
+
+	ulid::ULID ulid_want = ulid::Unmarshal("01ARYZ6S410000000000000000");
+
+	ASSERT_EQ(0, ulid::CompareULIDs(ulid_want, ulid_got));
+}
