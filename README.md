@@ -88,6 +88,14 @@ Unmarshals the passed character array into the ulid.
 
 Creates a new ULID by Unmarshaling the passed string.
 
+### void ulid::UnmarshalBinaryFrom(const uint8_t[26], ULID&)
+
+Unmarshals the passed byte array into the ulid.
+
+### ULID ulid::UnmarshalBinary(const std::vector<uint8_t>&)
+
+Creates a new ULID by Unmarshaling the passed vector.
+
 ### time_t ulid::Time(const ULID&)
 
 Extracts the timestamp used to create the ULID.
