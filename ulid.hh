@@ -235,16 +235,16 @@ void EncodeEntropy(const std::function<uint8_t()>& rng, ULID& ulid) {
 //
 // std::rand returns values in [0, RAND_MAX]
 void EncodeEntropyRand(ULID& ulid) {
-	ulid.data[6] = (std::rand() * 255) / RAND_MAX;
-	ulid.data[7] = (std::rand() * 255) / RAND_MAX;
-	ulid.data[8] = (std::rand() * 255) / RAND_MAX;
-	ulid.data[9] = (std::rand() * 255) / RAND_MAX;
-	ulid.data[10] = (std::rand() * 255) / RAND_MAX;
-	ulid.data[11] = (std::rand() * 255) / RAND_MAX;
-	ulid.data[12] = (std::rand() * 255) / RAND_MAX;
-	ulid.data[13] = (std::rand() * 255) / RAND_MAX;
-	ulid.data[14] = (std::rand() * 255) / RAND_MAX;
-	ulid.data[15] = (std::rand() * 255) / RAND_MAX;
+	ulid.data[6] = (std::rand() * 255ull) / RAND_MAX;
+	ulid.data[7] = (std::rand() * 255ull) / RAND_MAX;
+	ulid.data[8] = (std::rand() * 255ull) / RAND_MAX;
+	ulid.data[9] = (std::rand() * 255ull) / RAND_MAX;
+	ulid.data[10] = (std::rand() * 255ull) / RAND_MAX;
+	ulid.data[11] = (std::rand() * 255ull) / RAND_MAX;
+	ulid.data[12] = (std::rand() * 255ull) / RAND_MAX;
+	ulid.data[13] = (std::rand() * 255ull) / RAND_MAX;
+	ulid.data[14] = (std::rand() * 255ull) / RAND_MAX;
+	ulid.data[15] = (std::rand() * 255ull) / RAND_MAX;
 }
 
 // Encode will create an encoded ULID with a timestamp and a generator.
