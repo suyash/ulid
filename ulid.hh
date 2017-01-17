@@ -489,4 +489,28 @@ int CompareULIDs(const ULID& ulid1, const ULID& ulid2) {
 	return 0;
 }
 
+// Time will extract the timestamp used to generate a ULID
+time_t Time(const ULID& ulid) {
+	time_t ans = 0;
+
+	ans |= ulid.data[0];
+
+	ans <<= 8;
+	ans |= ulid.data[1];
+
+	ans <<= 8;
+	ans |= ulid.data[2];
+
+	ans <<= 8;
+	ans |= ulid.data[3];
+
+	ans <<= 8;
+	ans |= ulid.data[4];
+
+	ans <<= 8;
+	ans |= ulid.data[5];
+
+	return ans;
+}
+
 };  // namespace ulid

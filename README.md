@@ -68,7 +68,7 @@ Create:Encode::CreateNowRand:EncodeNowRand
 
 Marshals the ulid into the passed character array.
 
-### std::string Marshal(const ULID&)
+### std::string ulid::Marshal(const ULID&)
 
 Marshals and generates std::string.
 
@@ -76,6 +76,10 @@ Marshals and generates std::string.
 
 Unmarshals the passed character array into the ulid.
 
-### ULID Unmarshal(const std::string&)
+### ULID ulid::Unmarshal(const std::string&)
 
 Creates a new ULID by Unmarshaling the passed string.
+
+### time_t ulid::Time(const ULID&)
+
+Extracts the timestamp used to create the ULID.
