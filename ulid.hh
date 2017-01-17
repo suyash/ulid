@@ -5,6 +5,7 @@
 
 namespace ulid {
 
+// ULID is a 16 byte Universally Unique Lexicographically Sortable Identifier
 struct ULID {
 	uint8_t data[16];
 
@@ -14,17 +15,32 @@ struct ULID {
 		}
 	}
 
-	ULID(const ULID& ulid) {
+	ULID(const ULID& other) {
 		for (int i = 0 ; i < 16 ; i++) {
-			data[i] = ulid.data[i];
+			data[i] = other.data[i];
 		}
 	}
 
-	ULID(ULID&& ulid) {
+	ULID& operator=(const ULID& other) {
 		for (int i = 0 ; i < 16 ; i++) {
-			data[i] = ulid.data[i];
-			ulid.data[i] = 0;
+			data[i] = other.data[i];
 		}
+		return *this;
+	}
+
+	ULID(ULID&& other) {
+		for (int i = 0 ; i < 16 ; i++) {
+			data[i] = other.data[i];
+			other.data[i] = 0;
+		}
+	}
+
+	ULID& operator=(ULID&& other) {
+		for (int i = 0 ; i < 16 ; i++) {
+			data[i] = other.data[i];
+			other.data[i] = 0;
+		}
+		return *this;
 	}
 };
 
@@ -40,28 +56,28 @@ void EncodeTime(time_t timestamp, ULID& ulid) {
 }
 
 // EncodeEntropy will encode the last 10 bytes of the passed uint8_t array with
-// the values generated using the passed prng
-void EncodeEntropy(const std::function<uint8_t()>& prng, ULID& ulid) {
-	ulid.data[6] = prng();
-	ulid.data[7] = prng();
-	ulid.data[8] = prng();
-	ulid.data[9] = prng();
-	ulid.data[10] = prng();
-	ulid.data[11] = prng();
-	ulid.data[12] = prng();
-	ulid.data[13] = prng();
-	ulid.data[14] = prng();
-	ulid.data[15] = prng();
+// the values generated using the passed random number generator.
+void EncodeEntropy(const std::function<uint8_t()>& rng, ULID& ulid) {
+	ulid.data[6] = rng();
+	ulid.data[7] = rng();
+	ulid.data[8] = rng();
+	ulid.data[9] = rng();
+	ulid.data[10] = rng();
+	ulid.data[11] = rng();
+	ulid.data[12] = rng();
+	ulid.data[13] = rng();
+	ulid.data[14] = rng();
+	ulid.data[15] = rng();
 }
 
 // Encode will create an encoded ULID with a timestamp and a generator.
-void Encode(time_t timestamp, const std::function<uint8_t()>& prng, ULID& ulid) {
+void Encode(time_t timestamp, const std::function<uint8_t()>& rng, ULID& ulid) {
 	EncodeTime(timestamp, ulid);
-	EncodeEntropy(prng, ulid);
+	EncodeEntropy(rng, ulid);
 }
 
 // Crockford's Base32
-std::string Encoding = "0123456789ABCDEFGHJKMNPQRSTVWXYZ";
+const char Encoding[33] = "0123456789ABCDEFGHJKMNPQRSTVWXYZ";
 
 // MarshalTo will marshal a ULID to the passed character array.
 //

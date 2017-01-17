@@ -11,6 +11,6 @@ TEST(ulid, 1) {
 
 	ASSERT_EQ(26, str.size());
 	for (char c : str) {
-		ASSERT_NE(std::string::npos, ulid::Encoding.find(c));
+		ASSERT_NE(std::string::npos, std::string(ulid::Encoding).find(c));
 	}
 }
