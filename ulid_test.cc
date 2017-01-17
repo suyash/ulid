@@ -1,5 +1,7 @@
 #include <gtest/gtest.h>
 
+#include <thread>
+
 #include "ulid.hh"
 
 TEST(basic, 1) {
@@ -100,4 +102,13 @@ TEST(AlizainCompatibility, 1) {
 	ulid::ULID ulid_want = ulid::Unmarshal("01ARYZ6S410000000000000000");
 
 	ASSERT_EQ(0, ulid::CompareULIDs(ulid_want, ulid_got));
+}
+
+TEST(LexicographicalOrder, 1) {
+	ulid::ULID ulid1 = ulid::CreateNowRand();
+	std::this_thread::sleep_for(std::chrono::seconds(1));
+	ulid::ULID ulid2 = ulid::CreateNowRand();
+
+	EXPECT_EQ(-1, ulid::CompareULIDs(ulid1, ulid2));
+	EXPECT_EQ(1, ulid::CompareULIDs(ulid2, ulid1));
 }
