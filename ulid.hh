@@ -10,36 +10,190 @@ struct ULID {
 	uint8_t data[16];
 
 	ULID() {
-		for (int i = 0 ; i < 16 ; i++) {
-			data[i] = 0;
-		}
+		// for (int i = 0 ; i < 16 ; i++) {
+		// 	data[i] = 0;
+		// }
+
+		// unrolled loop
+		data[0] = 0;
+		data[1] = 0;
+		data[2] = 0;
+		data[3] = 0;
+		data[4] = 0;
+		data[5] = 0;
+		data[6] = 0;
+		data[7] = 0;
+		data[8] = 0;
+		data[9] = 0;
+		data[10] = 0;
+		data[11] = 0;
+		data[12] = 0;
+		data[13] = 0;
+		data[14] = 0;
+		data[15] = 0;
 	}
 
 	ULID(const ULID& other) {
-		for (int i = 0 ; i < 16 ; i++) {
-			data[i] = other.data[i];
-		}
+		// for (int i = 0 ; i < 16 ; i++) {
+		// 	data[i] = other.data[i];
+		// }
+
+		// unrolled loop
+		data[0] = other.data[0];
+		data[1] = other.data[1];
+		data[2] = other.data[2];
+		data[3] = other.data[3];
+		data[4] = other.data[4];
+		data[5] = other.data[5];
+		data[6] = other.data[6];
+		data[7] = other.data[7];
+		data[8] = other.data[8];
+		data[9] = other.data[9];
+		data[10] = other.data[10];
+		data[11] = other.data[11];
+		data[12] = other.data[12];
+		data[13] = other.data[13];
+		data[14] = other.data[14];
+		data[15] = other.data[15];
 	}
 
 	ULID& operator=(const ULID& other) {
-		for (int i = 0 ; i < 16 ; i++) {
-			data[i] = other.data[i];
-		}
+		// for (int i = 0 ; i < 16 ; i++) {
+		// 	data[i] = other.data[i];
+		// }
+
+		// unrolled loop
+		data[0] = other.data[0];
+		data[1] = other.data[1];
+		data[2] = other.data[2];
+		data[3] = other.data[3];
+		data[4] = other.data[4];
+		data[5] = other.data[5];
+		data[6] = other.data[6];
+		data[7] = other.data[7];
+		data[8] = other.data[8];
+		data[9] = other.data[9];
+		data[10] = other.data[10];
+		data[11] = other.data[11];
+		data[12] = other.data[12];
+		data[13] = other.data[13];
+		data[14] = other.data[14];
+		data[15] = other.data[15];
+
 		return *this;
 	}
 
 	ULID(ULID&& other) {
-		for (int i = 0 ; i < 16 ; i++) {
-			data[i] = other.data[i];
-			other.data[i] = 0;
-		}
+		// for (int i = 0 ; i < 16 ; i++) {
+		// 	data[i] = other.data[i];
+		// 	other.data[i] = 0;
+		// }
+
+		// unrolled loop
+		data[0] = other.data[0];
+		other.data[0] = 0;
+
+		data[1] = other.data[1];
+		other.data[1] = 0;
+
+		data[2] = other.data[2];
+		other.data[2] = 0;
+
+		data[3] = other.data[3];
+		other.data[3] = 0;
+
+		data[4] = other.data[4];
+		other.data[4] = 0;
+
+		data[5] = other.data[5];
+		other.data[5] = 0;
+
+		data[6] = other.data[6];
+		other.data[6] = 0;
+
+		data[7] = other.data[7];
+		other.data[7] = 0;
+
+		data[8] = other.data[8];
+		other.data[8] = 0;
+
+		data[9] = other.data[9];
+		other.data[9] = 0;
+
+		data[10] = other.data[10];
+		other.data[10] = 0;
+
+		data[11] = other.data[11];
+		other.data[11] = 0;
+
+		data[12] = other.data[12];
+		other.data[12] = 0;
+
+		data[13] = other.data[13];
+		other.data[13] = 0;
+
+		data[14] = other.data[14];
+		other.data[14] = 0;
+
+		data[15] = other.data[15];
+		other.data[15] = 0;
 	}
 
 	ULID& operator=(ULID&& other) {
-		for (int i = 0 ; i < 16 ; i++) {
-			data[i] = other.data[i];
-			other.data[i] = 0;
-		}
+		// for (int i = 0 ; i < 16 ; i++) {
+		// 	data[i] = other.data[i];
+		// 	other.data[i] = 0;
+		// }
+
+		// unrolled loop
+		data[0] = other.data[0];
+		other.data[0] = 0;
+
+		data[1] = other.data[1];
+		other.data[1] = 0;
+
+		data[2] = other.data[2];
+		other.data[2] = 0;
+
+		data[3] = other.data[3];
+		other.data[3] = 0;
+
+		data[4] = other.data[4];
+		other.data[4] = 0;
+
+		data[5] = other.data[5];
+		other.data[5] = 0;
+
+		data[6] = other.data[6];
+		other.data[6] = 0;
+
+		data[7] = other.data[7];
+		other.data[7] = 0;
+
+		data[8] = other.data[8];
+		other.data[8] = 0;
+
+		data[9] = other.data[9];
+		other.data[9] = 0;
+
+		data[10] = other.data[10];
+		other.data[10] = 0;
+
+		data[11] = other.data[11];
+		other.data[11] = 0;
+
+		data[12] = other.data[12];
+		other.data[12] = 0;
+
+		data[13] = other.data[13];
+		other.data[13] = 0;
+
+		data[14] = other.data[14];
+		other.data[14] = 0;
+
+		data[15] = other.data[15];
+		other.data[15] = 0;
+
 		return *this;
 	}
 };
