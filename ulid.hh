@@ -371,4 +371,80 @@ ULID Unmarshal(const std::string& str) {
 	return ulid;
 }
 
+int CompareULIDs(const ULID& ulid1, const ULID& ulid2) {
+	// for (int i = 0 ; i < 16 ; i++) {
+	// 	if (ulid1.data[i] != ulid2.data[i]) {
+	// 		return (ulid1.data[i] < ulid2.data[i]) * -2 + 1;
+	// 	}
+	// }
+
+	// unrolled loop
+
+	if (ulid1.data[0] != ulid2.data[0]) {
+		return (ulid1.data[0] < ulid2.data[0]) * -2 + 1;
+	}
+
+	if (ulid1.data[1] != ulid2.data[1]) {
+		return (ulid1.data[1] < ulid2.data[1]) * -2 + 1;
+	}
+
+	if (ulid1.data[2] != ulid2.data[2]) {
+		return (ulid1.data[2] < ulid2.data[2]) * -2 + 1;
+	}
+
+	if (ulid1.data[3] != ulid2.data[3]) {
+		return (ulid1.data[3] < ulid2.data[3]) * -2 + 1;
+	}
+
+	if (ulid1.data[4] != ulid2.data[4]) {
+		return (ulid1.data[4] < ulid2.data[4]) * -2 + 1;
+	}
+
+	if (ulid1.data[5] != ulid2.data[5]) {
+		return (ulid1.data[5] < ulid2.data[5]) * -2 + 1;
+	}
+
+	if (ulid1.data[6] != ulid2.data[6]) {
+		return (ulid1.data[6] < ulid2.data[6]) * -2 + 1;
+	}
+
+	if (ulid1.data[7] != ulid2.data[7]) {
+		return (ulid1.data[7] < ulid2.data[7]) * -2 + 1;
+	}
+
+	if (ulid1.data[8] != ulid2.data[8]) {
+		return (ulid1.data[8] < ulid2.data[8]) * -2 + 1;
+	}
+
+	if (ulid1.data[9] != ulid2.data[9]) {
+		return (ulid1.data[9] < ulid2.data[9]) * -2 + 1;
+	}
+
+	if (ulid1.data[10] != ulid2.data[10]) {
+		return (ulid1.data[10] < ulid2.data[10]) * -2 + 1;
+	}
+
+	if (ulid1.data[11] != ulid2.data[11]) {
+		return (ulid1.data[11] < ulid2.data[11]) * -2 + 1;
+	}
+
+	if (ulid1.data[12] != ulid2.data[12]) {
+		return (ulid1.data[12] < ulid2.data[12]) * -2 + 1;
+	}
+
+	if (ulid1.data[13] != ulid2.data[13]) {
+		return (ulid1.data[13] < ulid2.data[13]) * -2 + 1;
+	}
+
+	if (ulid1.data[14] != ulid2.data[14]) {
+		return (ulid1.data[14] < ulid2.data[14]) * -2 + 1;
+	}
+
+	if (ulid1.data[15] != ulid2.data[15]) {
+		return (ulid1.data[15] < ulid2.data[15]) * -2 + 1;
+	}
+
+	return 0;
+}
+
 };  // namespace ulid

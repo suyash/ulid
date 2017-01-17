@@ -21,7 +21,5 @@ TEST(Unmarshal, 1) {
 	ulid::ULID ulid_expected;
 	ulid::Encode(1484581420, []() { return 4; }, ulid_expected);
 
-	for (int i = 0 ; i < 16 ; i++) {
-		ASSERT_EQ(ulid_expected.data[i], ulid.data[i]);
-	}
+	ASSERT_EQ(0, ulid::CompareULIDs(ulid_expected, ulid));
 }
