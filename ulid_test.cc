@@ -47,6 +47,27 @@ TEST(EncodeEntropyRand, 1) {
 	}
 }
 
+TEST(EncodeEntropyRand, 2) {
+	time_t timestamp = 1000000;
+	auto duration = std::chrono::seconds(timestamp);
+	auto nsduration = std::chrono::duration_cast<std::chrono::nanoseconds>(duration);
+	auto msduration = std::chrono::duration_cast<std::chrono::milliseconds>(duration);
+
+	ulid::ULID ulid1;
+	ulid::EncodeTime(msduration.count(), ulid1);
+
+	std::srand(nsduration.count());
+	ulid::EncodeEntropyRand(ulid1);
+
+	ulid::ULID ulid2;
+	ulid::EncodeTime(msduration.count(), ulid2);
+
+	std::srand(nsduration.count());
+	ulid::EncodeEntropyRand(ulid2);
+
+	ASSERT_EQ(0, ulid::CompareULIDs(ulid1, ulid2));
+}
+
 TEST(EncodeNowRand, 1) {
 	ulid::ULID ulid;
 	ulid::EncodeNowRand(ulid);
