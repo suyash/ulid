@@ -1,7 +1,8 @@
 #pragma once
 
+#include <cstdlib>
+#include <ctime>
 #include <functional>
-#include <random>
 
 namespace ulid {
 
@@ -209,6 +210,11 @@ void EncodeTime(time_t timestamp, ULID& ulid) {
 	ulid.data[5] = static_cast<uint8_t>(timestamp);
 }
 
+// EncodeTimeNow will encode a ULID using the time obtained using std::time(nullptr)
+void EncodeTimeNow(ULID& ulid) {
+	EncodeTime(std::time(nullptr), ulid);
+}
+
 // EncodeEntropy will encode the last 10 bytes of the passed uint8_t array with
 // the values generated using the passed random number generator.
 void EncodeEntropy(const std::function<uint8_t()>& rng, ULID& ulid) {
@@ -224,10 +230,46 @@ void EncodeEntropy(const std::function<uint8_t()>& rng, ULID& ulid) {
 	ulid.data[15] = rng();
 }
 
+// EncodeEntropyRand will encode a ulid using std::rand
+//
+// std::rand returns values in [0, RAND_MAX]
+void EncodeEntropyRand(ULID& ulid) {
+	ulid.data[6] = (std::rand() * 255) / RAND_MAX;
+	ulid.data[7] = (std::rand() * 255) / RAND_MAX;
+	ulid.data[8] = (std::rand() * 255) / RAND_MAX;
+	ulid.data[9] = (std::rand() * 255) / RAND_MAX;
+	ulid.data[10] = (std::rand() * 255) / RAND_MAX;
+	ulid.data[11] = (std::rand() * 255) / RAND_MAX;
+	ulid.data[12] = (std::rand() * 255) / RAND_MAX;
+	ulid.data[13] = (std::rand() * 255) / RAND_MAX;
+	ulid.data[14] = (std::rand() * 255) / RAND_MAX;
+	ulid.data[15] = (std::rand() * 255) / RAND_MAX;
+}
+
 // Encode will create an encoded ULID with a timestamp and a generator.
 void Encode(time_t timestamp, const std::function<uint8_t()>& rng, ULID& ulid) {
 	EncodeTime(timestamp, ulid);
 	EncodeEntropy(rng, ulid);
+}
+
+// EncodeNowRand = EncodeTimeNow + EncodeEntropyRand.
+void EncodeNowRand(ULID& ulid) {
+	EncodeTimeNow(ulid);
+	EncodeEntropyRand(ulid);
+}
+
+// Create will create a ULID with a timestamp and a generator.
+ULID Create(time_t timestamp, const std::function<uint8_t()>& rng) {
+	ULID ulid;
+	Encode(timestamp, rng, ulid);
+	return ulid;
+}
+
+// CreateNowRand:EncodeNowRand = Create:Encode.
+ULID CreateNowRand() {
+	ULID ulid;
+	EncodeNowRand(ulid);
+	return ulid;
 }
 
 // Crockford's Base32
