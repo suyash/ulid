@@ -80,6 +80,13 @@ TEST(Unmarshal, 1) {
 	ASSERT_EQ(0, ulid::CompareULIDs(ulid_expected, ulid));
 }
 
+TEST(UnmarshalBinary, 1) {
+	ulid::ULID ulid_expected = ulid::Create(1484581420, []() { return 4; });
+	std::vector<uint8_t> b = ulid::MarshalBinary(ulid_expected);
+	ulid::ULID ulid = ulid::UnmarshalBinary(b);
+	ASSERT_EQ(0, ulid::CompareULIDs(ulid_expected, ulid));
+}
+
 TEST(Time, 1) {
 	ulid::ULID ulid = ulid::Create(1484581420, []() { return 4; });
 	ASSERT_EQ(1484581420, ulid::Time(ulid));

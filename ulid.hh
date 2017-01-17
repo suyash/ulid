@@ -337,17 +337,15 @@ std::string Marshal(const ULID& ulid) {
 
 // MarshalBinaryTo will Marshal a ULID to the passed byte array
 void MarshalBinaryTo(const ULID& ulid, uint8_t dst[16]) {
-	// for (int i = 0 ; i < 16 ; i++) {
-	// 	dst[i] = ulid.data[i];
-	// }
-
-	// unrolled loop
+	// timestamp
 	dst[0] = ulid.data[0];
 	dst[1] = ulid.data[1];
 	dst[2] = ulid.data[2];
 	dst[3] = ulid.data[3];
 	dst[4] = ulid.data[4];
 	dst[5] = ulid.data[5];
+
+	// entropy
 	dst[6] = ulid.data[6];
 	dst[7] = ulid.data[7];
 	dst[8] = ulid.data[8];
@@ -443,6 +441,34 @@ void UnmarshalFrom(const char str[26], ULID& ulid) {
 ULID Unmarshal(const std::string& str) {
 	ULID ulid;
 	UnmarshalFrom(str.c_str(), ulid);
+	return ulid;
+}
+
+void UnmarshalBinaryFrom(const uint8_t b[16], ULID& ulid) {
+	// timestamp
+	ulid.data[0] = b[0];
+	ulid.data[1] = b[1];
+	ulid.data[2] = b[2];
+	ulid.data[3] = b[3];
+	ulid.data[4] = b[4];
+	ulid.data[5] = b[5];
+
+	// entropy
+	ulid.data[6] = b[6];
+	ulid.data[7] = b[7];
+	ulid.data[8] = b[8];
+	ulid.data[9] = b[9];
+	ulid.data[10] = b[10];
+	ulid.data[11] = b[11];
+	ulid.data[12] = b[12];
+	ulid.data[13] = b[13];
+	ulid.data[14] = b[14];
+	ulid.data[15] = b[15];
+}
+
+ULID UnmarshalBinary(const std::vector<uint8_t>& b) {
+	ULID ulid;
+	UnmarshalBinaryFrom(b.data(), ulid);
 	return ulid;
 }
 
