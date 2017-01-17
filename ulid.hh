@@ -3,6 +3,7 @@
 #include <cstdlib>
 #include <ctime>
 #include <functional>
+#include <vector>
 
 namespace ulid {
 
@@ -332,6 +333,38 @@ std::string Marshal(const ULID& ulid) {
 	data[26] = '\0';
 	MarshalTo(ulid, data);
 	return std::string(data);
+}
+
+// MarshalBinaryTo will Marshal a ULID to the passed byte array
+void MarshalBinaryTo(const ULID& ulid, uint8_t dst[16]) {
+	// for (int i = 0 ; i < 16 ; i++) {
+	// 	dst[i] = ulid.data[i];
+	// }
+
+	// unrolled loop
+	dst[0] = ulid.data[0];
+	dst[1] = ulid.data[1];
+	dst[2] = ulid.data[2];
+	dst[3] = ulid.data[3];
+	dst[4] = ulid.data[4];
+	dst[5] = ulid.data[5];
+	dst[6] = ulid.data[6];
+	dst[7] = ulid.data[7];
+	dst[8] = ulid.data[8];
+	dst[9] = ulid.data[9];
+	dst[10] = ulid.data[10];
+	dst[11] = ulid.data[11];
+	dst[12] = ulid.data[12];
+	dst[13] = ulid.data[13];
+	dst[14] = ulid.data[14];
+	dst[15] = ulid.data[15];
+}
+
+// MarshalBinary will Marshal a ULID to a byte vector.
+std::vector<uint8_t> MarshalBinary(const ULID& ulid) {
+	std::vector<uint8_t> dst(16);
+	MarshalBinaryTo(ulid, dst.data());
+	return dst;
 }
 
 // decimal encodings for characters. 0xFF indicates invalid character.

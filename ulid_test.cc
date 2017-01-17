@@ -66,12 +66,17 @@ TEST(CreateNowRand, 1) {
 	}
 }
 
+TEST(MarshalBinary, 1) {
+	ulid::ULID ulid = ulid::Create(1484581420, []() { return 4; });
+	std::vector<uint8_t> b = ulid::MarshalBinary(ulid);
+	for (int i = 0 ; i < 16 ; i++) {
+		ASSERT_EQ(ulid.data[i], b[i]);
+	}
+}
+
 TEST(Unmarshal, 1) {
 	ulid::ULID ulid = ulid::Unmarshal("0001C7STHC0G2081040G208104");
-
-	ulid::ULID ulid_expected;
-	ulid::Encode(1484581420, []() { return 4; }, ulid_expected);
-
+	ulid::ULID ulid_expected = ulid::Create(1484581420, []() { return 4; });
 	ASSERT_EQ(0, ulid::CompareULIDs(ulid_expected, ulid));
 }
 
