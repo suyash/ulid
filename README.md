@@ -1,4 +1,4 @@
-# ulid [![Build Status](https://travis-ci.org/suyash/ulid.hh.svg?branch=master)](https://travis-ci.org/suyash/ulid.hh)
+# ulid [![Build Status](https://travis-ci.org/suyash/ulid.svg?branch=master)](https://travis-ci.org/suyash/ulid)
 
 C++ port of [oklog/ulid](https://github.com/oklog/ulid) and [alizain/ulid](https://github.com/alizain/ulid).
 
