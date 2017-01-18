@@ -26,7 +26,7 @@ GTEST_SRCS_ = $(GTEST_DIR)/src/*.cc $(GTEST_DIR)/src/*.h $(GTEST_HEADERS)
 
 # General Tasks
 
-all : test
+all : test bench
 
 clean :
 	rm -f $(TESTS) gtest.a gtest_main.a *.o *.out
@@ -55,7 +55,7 @@ gtest_main.a : gtest-all.o gtest_main.o
 
 $(BENCHMARK_BUILD_DIR) : vendor/benchmark
 	cd $< \
-	&& cmake -D CMAKE_INSTALL_PREFIX=../../$@ . \
+	&& cmake -DCMAKE_INSTALL_PREFIX=../../$@ -DCMAKE_BUILD_TYPE=Release . \
 	&& make \
 	&& make install
 
@@ -79,4 +79,4 @@ ulid_bench.out : ulid_bench.o
 	$(CXX) $(CPPFLAGS) $(CXXFLAGS) $^ -lpthread -L$(BENCHMARK_BUILD_DIR)/lib -lbenchmark -o $@
 
 ulid_bench : ulid_bench.out
-	./$<
+	./$< --benchmark_out_format=console
