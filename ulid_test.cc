@@ -23,9 +23,21 @@ TEST(Create, 1) {
 	ASSERT_EQ(0, ulid::CompareULIDs(ulid1, ulid2));
 }
 
-TEST(EncodeNow, 1) {
+TEST(EncodeTimeNow, 1) {
 	ulid::ULID ulid;
 	ulid::EncodeTimeNow(ulid);
+	ulid::EncodeEntropy([]() { return 4; }, ulid);
+	std::string str = ulid::Marshal(ulid);
+
+	ASSERT_EQ(26, str.size());
+	for (char c : str) {
+		ASSERT_NE(std::string::npos, std::string(ulid::Encoding).find(c));
+	}
+}
+
+TEST(EncodeTimeSystemClockNow, 1) {
+	ulid::ULID ulid;
+	ulid::EncodeTimeSystemClockNow(ulid);
 	ulid::EncodeEntropy([]() { return 4; }, ulid);
 	std::string str = ulid::Marshal(ulid);
 
@@ -41,20 +53,6 @@ TEST(EncodeEntropyRand, 1) {
 	ulid::EncodeEntropyRand(ulid);
 	std::string str = ulid::Marshal(ulid);
 
-	ASSERT_EQ(26, str.size());
-	for (char c : str) {
-		ASSERT_NE(std::string::npos, std::string(ulid::Encoding).find(c));
-	}
-}
-
-TEST(EncodeEntropyMt19937, 1) {
-	ulid::ULID ulid;
-	ulid::EncodeTimeNow(ulid);
-
-	std::mt19937 generator(4);
-	ulid::EncodeEntropyMt19937(generator, ulid);
-
-	std::string str = ulid::Marshal(ulid);
 	ASSERT_EQ(26, str.size());
 	for (char c : str) {
 		ASSERT_NE(std::string::npos, std::string(ulid::Encoding).find(c));
@@ -80,6 +78,20 @@ TEST(EncodeEntropyRand, 2) {
 	ulid::EncodeEntropyRand(ulid2);
 
 	ASSERT_EQ(0, ulid::CompareULIDs(ulid1, ulid2));
+}
+
+TEST(EncodeEntropyMt19937, 1) {
+	ulid::ULID ulid;
+	ulid::EncodeTimeNow(ulid);
+
+	std::mt19937 generator(4);
+	ulid::EncodeEntropyMt19937(generator, ulid);
+
+	std::string str = ulid::Marshal(ulid);
+	ASSERT_EQ(26, str.size());
+	for (char c : str) {
+		ASSERT_NE(std::string::npos, std::string(ulid::Encoding).find(c));
+	}
 }
 
 TEST(EncodeNowRand, 1) {

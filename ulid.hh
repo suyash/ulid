@@ -1,5 +1,6 @@
 #pragma once
 
+#include <chrono>
 #include <cstdlib>
 #include <ctime>
 #include <functional>
@@ -215,6 +216,14 @@ void EncodeTime(time_t timestamp, ULID& ulid) {
 // EncodeTimeNow will encode a ULID using the time obtained using std::time(nullptr)
 void EncodeTimeNow(ULID& ulid) {
 	EncodeTime(std::time(nullptr), ulid);
+}
+
+// EncodeTimeSystemClockNow will encode a ULID using the time obtained using
+// std::chrono::system_clock::now() by taking the timestamp in milliseconds.
+void EncodeTimeSystemClockNow(ULID& ulid) {
+	auto now = std::chrono::system_clock::now();
+	auto ms = std::chrono::duration_cast<std::chrono::milliseconds>(now.time_since_epoch());
+	EncodeTime(ms.count(), ulid);
 }
 
 // EncodeEntropy will encode the last 10 bytes of the passed uint8_t array with
