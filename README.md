@@ -4,6 +4,10 @@ C++ port of [oklog/ulid](https://github.com/oklog/ulid) and [alizain/ulid](https
 
 include header to use.
 
+- [Usage](#usage)
+- [API](#api)
+- [Benchmarks](#benchmarks)
+
 ## Usage
 
 ```c++
@@ -99,3 +103,32 @@ Creates a new ULID by Unmarshaling the passed vector.
 ### time_t ulid::Time(const ULID&)
 
 Extracts the timestamp used to create the ULID.
+
+## Benchmarks
+
+From https://travis-ci.org/suyash/ulid/jobs/193076107
+
+```
+Run on (32 X 2793.49 MHz CPU s)
+2017-01-18 15:24:38
+Benchmark                    Time           CPU Iterations
+----------------------------------------------------------
+EncodeTime                  21 ns         21 ns   34730355
+EncodeTimeNow               27 ns         27 ns   26099807
+EncodeEntropy              390 ns        388 ns    1835261
+EncodeEntropyRand          331 ns        323 ns    2212419
+Encode                     392 ns        387 ns    1686274
+EncodeNowRand              323 ns        315 ns    2118726
+Create                     409 ns        397 ns    1764046
+CreateNowRand              363 ns        361 ns    1970109
+MarshalTo                   84 ns         81 ns    8512228
+Marshal                    179 ns        174 ns    4078253
+MarshalBinaryTo             36 ns         34 ns   21849073
+MarshalBinary              284 ns        256 ns    2552790
+UnmarshalFrom               74 ns         72 ns   10660505
+Unmarshal                  206 ns        198 ns    3518455
+UnmarshalBinaryFrom         35 ns         34 ns   21132692
+UnmarshalBinary            349 ns        324 ns    2261062
+Time                        37 ns         36 ns   19297337
+CompareULIDs                29 ns         29 ns   20533156
+```
