@@ -29,8 +29,7 @@ all : test
 clean :
 	rm -f $(TESTS) gtest.a gtest_main.a *.o *.out
 
-test: $(TESTS).out
-	./$<
+test: $(TESTS)
 
 # Tasks for gtest
 
@@ -55,3 +54,6 @@ ulid_test.o : ulid_test.cc $(GTEST_HEADERS)
 
 ulid_test.out : gtest_main.a ulid_test.o
 	$(CXX) $(CPPFLAGS) $(CXXFLAGS) -lpthread $^ -o $@
+
+ulid_test : ulid_test.out
+	./$<
