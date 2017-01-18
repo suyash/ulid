@@ -38,6 +38,17 @@ static void EncodeEntropyRand(benchmark::State& state) {
 
 BENCHMARK(EncodeEntropyRand);
 
+static void EncodeEntropyMt19937(benchmark::State& state) {
+	ulid::ULID ulid;
+	std::mt19937 gen(4);
+
+	while (state.KeepRunning()) {
+		ulid::EncodeEntropyMt19937(gen, ulid);
+	}
+}
+
+BENCHMARK(EncodeEntropyMt19937);
+
 static void Encode(benchmark::State& state) {
 	ulid::ULID ulid;
 	while (state.KeepRunning()) {
