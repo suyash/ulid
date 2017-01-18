@@ -365,7 +365,8 @@ std::vector<uint8_t> MarshalBinary(const ULID& ulid) {
 	return dst;
 }
 
-// decimal encodings for characters. 0xFF indicates invalid character.
+// dec storesdecimal encodings for characters.
+// 0xFF indicates invalid character.
 // 48-57 are digits.
 // 65-90 are capital alphabets.
 const uint8_t dec[256] = {
@@ -416,6 +417,7 @@ const uint8_t dec[256] = {
 	0xFF, 0xFF, 0xFF, 0xFF, 0xFF, 0xFF, 0xFF, 0xFF
 };
 
+// UnmarshalFrom will unmarshal a ULID from the passed character array.
 void UnmarshalFrom(const char str[26], ULID& ulid) {
 	// timestamp
 	ulid.data[0] = (dec[int(str[0])] << 5) | dec[int(str[1])];
@@ -438,12 +440,14 @@ void UnmarshalFrom(const char str[26], ULID& ulid) {
 	ulid.data[15] = (dec[int(str[24])] << 5) | dec[int(str[25])];
 }
 
+// Unmarshal will create a new ULID by unmarshaling the passed string.
 ULID Unmarshal(const std::string& str) {
 	ULID ulid;
 	UnmarshalFrom(str.c_str(), ulid);
 	return ulid;
 }
 
+// UnmarshalBinaryFrom will unmarshal a ULID from the passed byte array.
 void UnmarshalBinaryFrom(const uint8_t b[16], ULID& ulid) {
 	// timestamp
 	ulid.data[0] = b[0];
@@ -466,12 +470,18 @@ void UnmarshalBinaryFrom(const uint8_t b[16], ULID& ulid) {
 	ulid.data[15] = b[15];
 }
 
+// Unmarshal will create a new ULID by unmarshaling the passed byte vector.
 ULID UnmarshalBinary(const std::vector<uint8_t>& b) {
 	ULID ulid;
 	UnmarshalBinaryFrom(b.data(), ulid);
 	return ulid;
 }
 
+// CompareULIDs will compare two ULIDs.
+// returns:
+//     -1 if ulid1 is Lexicographically before ulid2
+//      1 if ulid1 is Lexicographically after ulid2
+//      0 if ulid1 is same as ulid2
 int CompareULIDs(const ULID& ulid1, const ULID& ulid2) {
 	// for (int i = 0 ; i < 16 ; i++) {
 	// 	if (ulid1.data[i] != ulid2.data[i]) {
