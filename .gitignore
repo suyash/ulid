@@ -1,3 +1,4 @@
 *.a
 *.o
 *.out
+vendor/benchmark_build
