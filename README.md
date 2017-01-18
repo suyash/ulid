@@ -44,6 +44,10 @@ encodes passed time in first 6 bytes of a ULID.
 
 encodes `std::time(nullptr)` as time.
 
+### void ulid::EncodeTimeSystemClockNow(ULID&)
+
+encodes `std::chrono::system_clock::now()` by taking the timestamp in milliseconds.
+
 ### void ulid::EncodeEntropy(const std::function<uint8_t()>&, ULID&)
 
 sets the last 10 bytes as the values generated using the passed random byte generator.

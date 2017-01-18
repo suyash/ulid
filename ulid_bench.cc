@@ -20,6 +20,15 @@ static void EncodeTimeNow(benchmark::State& state) {
 
 BENCHMARK(EncodeTimeNow);
 
+static void EncodeTimeSystemClockNow(benchmark::State& state) {
+	ulid::ULID ulid;
+	while (state.KeepRunning()) {
+		ulid::EncodeTimeSystemClockNow(ulid);
+	}
+}
+
+BENCHMARK(EncodeTimeSystemClockNow);
+
 static void EncodeEntropy(benchmark::State& state) {
 	ulid::ULID ulid;
 	while (state.KeepRunning()) {
