@@ -47,6 +47,20 @@ TEST(EncodeEntropyRand, 1) {
 	}
 }
 
+TEST(EncodeEntropyMt19937, 1) {
+	ulid::ULID ulid;
+	ulid::EncodeTimeNow(ulid);
+
+	std::mt19937 generator(4);
+	ulid::EncodeEntropyMt19937(generator, ulid);
+
+	std::string str = ulid::Marshal(ulid);
+	ASSERT_EQ(26, str.size());
+	for (char c : str) {
+		ASSERT_NE(std::string::npos, std::string(ulid::Encoding).find(c));
+	}
+}
+
 TEST(EncodeEntropyRand, 2) {
 	time_t timestamp = 1000000;
 	auto duration = std::chrono::seconds(timestamp);

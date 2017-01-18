@@ -52,6 +52,10 @@ sets the last 10 bytes as the values generated using the passed random byte gene
 
 sets the entropy using `std::rand`.
 
+### void ulid::EncodeEntropyMt19937(std::mt19937& generator, ULID& ulid)
+
+sets the entropy by generating values from a `std::mt19937` generator, initializes a `std::uniform_int_distribution` on each invocation.
+
 ### void ulid::Encode(time_t, const std::function<uint8_t()>&, ULID&)
 
 EncodeTime + EncodeEntropy
