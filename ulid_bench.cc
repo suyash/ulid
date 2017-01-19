@@ -1,6 +1,10 @@
 #include <benchmark/benchmark_api.h>
 
-#include "ulid.hh"
+#ifdef ULIDUINT128
+#include "ulid_uint128.hh"
+#else
+#include "ulid_struct.hh"
+#endif // ULIDUINT128
 
 static void EncodeTime(benchmark::State& state) {
 	ulid::ULID ulid;
