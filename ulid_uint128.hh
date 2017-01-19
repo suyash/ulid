@@ -1,7 +1,5 @@
 #pragma once
 
-#define ULIDUINT128
-
 #include <chrono>
 #include <cstdlib>
 #include <ctime>
