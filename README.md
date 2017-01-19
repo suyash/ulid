@@ -30,17 +30,7 @@ std::cout << str << '\n'; // 0001C7STHC0G2081040G208104
 
 ### ulid::ULID
 
-The wrapper type for a 16 byte array representing a ULID.
-
-#### ulid::ULID::ULID()
-
-#### ulid::ULID::ULID(const ULID&)
-
-#### ULID& ulid::ULID::operator=(const ULID&)
-
-#### ulid::ULID::ULID(ULID&&)
-
-#### ULID& ulid::ULID::operator=(ULID&&)
+The wrapper type for a `__uint128_t` / 16 byte array representing a ULID.
 
 ### void ulid::EncodeTime(time_t, ULID&)
 
