@@ -12,10 +12,10 @@ CPPFLAGS += -isystem $(GTEST_DIR)/include -std=c++11
 CXXFLAGS += -g -Wall -Wextra -pthread -std=c++11
 
 # All tests produced by this Makefile.
-TESTS = ulid_test
+TESTS = ulid_uint128_test ulid_struct_test
 
 # All benchmarks produced by this Makefile.
-BENCHS = ulid_bench
+BENCHS = ulid_uint128_bench ulid_struct_bench
 
 # All Google Test headers.
 GTEST_HEADERS = $(GTEST_DIR)/include/gtest/*.h \
@@ -59,24 +59,46 @@ $(BENCHMARK_BUILD_DIR) : vendor/benchmark
 	&& make \
 	&& make install
 
-# Tasks for ulid_test
+# Tasks for ulid_uint128_test
 
-ulid_test.o : ulid_test.cc $(GTEST_HEADERS)
-	$(CXX) $(CPPFLAGS) $(CXXFLAGS) -c ulid_test.cc
+ulid_uint128_test.o : ulid_test.cc $(GTEST_HEADERS)
+	$(CXX) $(CPPFLAGS) $(CXXFLAGS) -DULIDUINT128 -c ulid_test.cc -o $@
 
-ulid_test.out : gtest_main.a ulid_test.o
+ulid_uint128_test.out : gtest_main.a ulid_uint128_test.o
 	$(CXX) $(CPPFLAGS) $(CXXFLAGS) -lpthread $^ -o $@
 
-ulid_test : ulid_test.out
+ulid_uint128_test : ulid_uint128_test.out
 	./$<
 
-# Tasks for ulid_bench
+# Tasks for ulid_struct_test
 
-ulid_bench.o : ulid_bench.cc $(BENCHMARK_BUILD_DIR)
-	$(CXX) $(CPPFLAGS) $(CXXFLAGS) -I$(BENCHMARK_BUILD_DIR)/include -c ulid_bench.cc
+ulid_struct_test.o : ulid_test.cc $(GTEST_HEADERS)
+	$(CXX) $(CPPFLAGS) $(CXXFLAGS) -c ulid_test.cc -o $@
 
-ulid_bench.out : ulid_bench.o
+ulid_struct_test.out : gtest_main.a ulid_struct_test.o
+	$(CXX) $(CPPFLAGS) $(CXXFLAGS) -lpthread $^ -o $@
+
+ulid_struct_test : ulid_struct_test.out
+	./$<
+
+# Tasks for ulid_uint128_bench
+
+ulid_uint128_bench.o : ulid_bench.cc $(BENCHMARK_BUILD_DIR)
+	$(CXX) $(CPPFLAGS) $(CXXFLAGS) -I$(BENCHMARK_BUILD_DIR)/include -DULIDUINT128 -c ulid_bench.cc -o $@
+
+ulid_uint128_bench.out : ulid_uint128_bench.o
 	$(CXX) $(CPPFLAGS) $(CXXFLAGS) $^ -lpthread -L$(BENCHMARK_BUILD_DIR)/lib -lbenchmark -o $@
 
-ulid_bench : ulid_bench.out
+ulid_uint128_bench : ulid_uint128_bench.out
+	./$< --benchmark_out_format=console
+
+# Tasks for ulid_uint128_bench
+
+ulid_struct_bench.o : ulid_bench.cc $(BENCHMARK_BUILD_DIR)
+	$(CXX) $(CPPFLAGS) $(CXXFLAGS) -I$(BENCHMARK_BUILD_DIR)/include -c ulid_bench.cc -o $@
+
+ulid_struct_bench.out : ulid_struct_bench.o
+	$(CXX) $(CPPFLAGS) $(CXXFLAGS) $^ -lpthread -L$(BENCHMARK_BUILD_DIR)/lib -lbenchmark -o $@
+
+ulid_struct_bench : ulid_struct_bench.out
 	./$< --benchmark_out_format=console

@@ -2,7 +2,11 @@
 
 #include <thread>
 
-#include "ulid.hh"
+#ifdef ULIDUINT128
+#include "ulid_uint128.hh"
+#else
+#include "ulid_struct.hh"
+#endif // ULIDUINT128
 
 TEST(basic, 1) {
 	ulid::ULID ulid = ulid::Create(std::time(nullptr), []() { return 4; });
