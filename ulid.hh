@@ -37,6 +37,46 @@ struct ULID {
 		data[15] = 0;
 	}
 
+	ULID(uint64_t val) {
+		// for (int i = 0 ; i < 16 ; i++) {
+		// 	data[15 - i] = static_cast<uint8_t>(val);
+		// 	val >>= 8;
+		// }
+
+		// unrolled loop
+		data[15] = static_cast<uint8_t>(val);
+
+		val >>= 8;
+		data[14] = static_cast<uint8_t>(val);
+
+		val >>= 8;
+		data[13] = static_cast<uint8_t>(val);
+
+		val >>= 8;
+		data[12] = static_cast<uint8_t>(val);
+
+		val >>= 8;
+		data[11] = static_cast<uint8_t>(val);
+
+		val >>= 8;
+		data[10] = static_cast<uint8_t>(val);
+
+		val >>= 8;
+		data[9] = static_cast<uint8_t>(val);
+
+		val >>= 8;
+		data[8] = static_cast<uint8_t>(val);
+
+		data[7] = 0;
+		data[6] = 0;
+		data[5] = 0;
+		data[4] = 0;
+		data[3] = 0;
+		data[2] = 0;
+		data[1] = 0;
+		data[0] = 0;
+	}
+
 	ULID(const ULID& other) {
 		// for (int i = 0 ; i < 16 ; i++) {
 		// 	data[i] = other.data[i];
