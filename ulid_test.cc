@@ -2,7 +2,7 @@
 
 #include <thread>
 
-#include "ulid.hh"
+#include "ulid_uint128.hh"
 
 TEST(basic, 1) {
 	ulid::ULID ulid = ulid::Create(std::time(nullptr), []() { return 4; });
@@ -15,7 +15,7 @@ TEST(basic, 1) {
 }
 
 TEST(Create, 1) {
-	ulid::ULID ulid1;
+	ulid::ULID ulid1 = 0;
 	ulid::Encode(1484581420, []() { return 4; }, ulid1);
 
 	auto ulid2 = ulid::Create(1484581420, []() { return 4; });
@@ -24,7 +24,7 @@ TEST(Create, 1) {
 }
 
 TEST(EncodeTimeNow, 1) {
-	ulid::ULID ulid;
+	ulid::ULID ulid = 0;
 	ulid::EncodeTimeNow(ulid);
 	ulid::EncodeEntropy([]() { return 4; }, ulid);
 	std::string str = ulid::Marshal(ulid);
@@ -36,7 +36,7 @@ TEST(EncodeTimeNow, 1) {
 }
 
 TEST(EncodeTimeSystemClockNow, 1) {
-	ulid::ULID ulid;
+	ulid::ULID ulid = 0;
 	ulid::EncodeTimeSystemClockNow(ulid);
 	ulid::EncodeEntropy([]() { return 4; }, ulid);
 	std::string str = ulid::Marshal(ulid);
@@ -48,7 +48,7 @@ TEST(EncodeTimeSystemClockNow, 1) {
 }
 
 TEST(EncodeEntropyRand, 1) {
-	ulid::ULID ulid;
+	ulid::ULID ulid = 0;
 	ulid::EncodeTimeNow(ulid);
 	ulid::EncodeEntropyRand(ulid);
 	std::string str = ulid::Marshal(ulid);
@@ -65,13 +65,13 @@ TEST(EncodeEntropyRand, 2) {
 	auto nsduration = std::chrono::duration_cast<std::chrono::nanoseconds>(duration);
 	auto msduration = std::chrono::duration_cast<std::chrono::milliseconds>(duration);
 
-	ulid::ULID ulid1;
+	ulid::ULID ulid1 = 0;
 	ulid::EncodeTime(msduration.count(), ulid1);
 
 	std::srand(nsduration.count());
 	ulid::EncodeEntropyRand(ulid1);
 
-	ulid::ULID ulid2;
+	ulid::ULID ulid2 = 0;
 	ulid::EncodeTime(msduration.count(), ulid2);
 
 	std::srand(nsduration.count());
@@ -81,7 +81,7 @@ TEST(EncodeEntropyRand, 2) {
 }
 
 TEST(EncodeEntropyMt19937, 1) {
-	ulid::ULID ulid;
+	ulid::ULID ulid = 0;
 	ulid::EncodeTimeNow(ulid);
 
 	std::mt19937 generator(4);
@@ -95,7 +95,7 @@ TEST(EncodeEntropyMt19937, 1) {
 }
 
 TEST(EncodeNowRand, 1) {
-	ulid::ULID ulid;
+	ulid::ULID ulid = 0;
 	ulid::EncodeNowRand(ulid);
 	std::string str = ulid::Marshal(ulid);
 
@@ -118,9 +118,17 @@ TEST(CreateNowRand, 1) {
 TEST(MarshalBinary, 1) {
 	ulid::ULID ulid = ulid::Create(1484581420, []() { return 4; });
 	std::vector<uint8_t> b = ulid::MarshalBinary(ulid);
+
+#ifdef ULIDUINT128
+	for (int i = 15 ; i >= 0 ; i--) {
+		ASSERT_EQ(static_cast<uint8_t>(ulid), b[i]);
+		ulid >>= 8;
+	}
+#else
 	for (int i = 0 ; i < 16 ; i++) {
 		ASSERT_EQ(ulid.data[i], b[i]);
 	}
+#endif // ULIDUINT128
 }
 
 TEST(Unmarshal, 1) {
@@ -143,11 +151,10 @@ TEST(Time, 1) {
 
 // https://github.com/oklog/ulid/blob/master/ulid_test.go#L160-L169
 TEST(AlizainCompatibility, 1) {
-	ulid::ULID ulid_got;
+	ulid::ULID ulid_got = 0;
 	ulid::EncodeTime(uint64_t(1469918176385), ulid_got);
 
 	ulid::ULID ulid_want = ulid::Unmarshal("01ARYZ6S410000000000000000");
-
 	ASSERT_EQ(0, ulid::CompareULIDs(ulid_want, ulid_got));
 }
 
