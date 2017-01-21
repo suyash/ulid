@@ -12,28 +12,18 @@ matrix:
           sources:
             - ubuntu-toolchain-r-test
           packages:
-            - g++-4.8
-      env: COMPILER=g++-4.8
-    - compiler: gcc
-      os: linux
-      dist: trusty
-      addons:
-        apt:
-          sources:
-            - ubuntu-toolchain-r-test
-          packages:
-            - g++-4.9
-      env: COMPILER=g++-4.9
-    - compiler: gcc
-      os: linux
-      dist: trusty
-      addons:
-        apt:
-          sources:
-            - ubuntu-toolchain-r-test
-          packages:
             - g++-5
       env: COMPILER=g++-5
+    - compiler: gcc
+      os: linux
+      dist: trusty
+      addons:
+        apt:
+          sources:
+            - ubuntu-toolchain-r-test
+          packages:
+            - g++-6
+      env: COMPILER=g++-6
     - compiler: clang
       os: linux
       dist: trusty
@@ -49,9 +39,9 @@ matrix:
     - compiler: clang
       os: osx
       osx_image: 7.3.1
-    - compiler: gcc
+    - compiler: clang
       os: osx
-      osx_image: 7.3.1
+      osx_image: 8.2.1
 
 before_script:
   - export CXX=${COMPILER-$CXX}
