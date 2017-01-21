@@ -6,7 +6,7 @@ GTEST_DIR = vendor/googletest
 BENCHMARK_BUILD_DIR = vendor/benchmark_build
 
 # Flags passed to the preprocessor.
-CPPFLAGS += -isystem $(GTEST_DIR)/include -std=c++11
+CPPFLAGS += -isystem $(GTEST_DIR)/include
 
 # Flags passed to the C++ compiler.
 CXXFLAGS += -g -Wall -Wextra -pthread -std=c++11
@@ -38,12 +38,10 @@ bench : $(BENCHS)
 # Tasks for gtest
 
 gtest-all.o : $(GTEST_SRCS_)
-	$(CXX) $(CPPFLAGS) -I$(GTEST_DIR) $(CXXFLAGS) -c \
-            $(GTEST_DIR)/src/gtest-all.cc
+	$(CXX) $(CPPFLAGS) -I$(GTEST_DIR) $(CXXFLAGS) -c $(GTEST_DIR)/src/gtest-all.cc
 
 gtest_main.o : $(GTEST_SRCS_)
-	$(CXX) $(CPPFLAGS) -I$(GTEST_DIR) $(CXXFLAGS) -c \
-            $(GTEST_DIR)/src/gtest_main.cc
+	$(CXX) $(CPPFLAGS) -I$(GTEST_DIR) $(CXXFLAGS) -c $(GTEST_DIR)/src/gtest_main.cc
 
 gtest.a : gtest-all.o
 	$(AR) $(ARFLAGS) $@ $^
@@ -84,10 +82,10 @@ ulid_struct_test : ulid_struct_test.out
 # Tasks for ulid_uint128_bench
 
 ulid_uint128_bench.o : ulid_bench.cc $(BENCHMARK_BUILD_DIR)
-	$(CXX) $(CPPFLAGS) $(CXXFLAGS) -I$(BENCHMARK_BUILD_DIR)/include -DULIDUINT128 -c ulid_bench.cc -o $@
+	$(CXX) $(CXXFLAGS) -I$(BENCHMARK_BUILD_DIR)/include -DULIDUINT128 -c ulid_bench.cc -o $@
 
 ulid_uint128_bench.out : ulid_uint128_bench.o
-	$(CXX) $(CPPFLAGS) $(CXXFLAGS) $^ -lpthread -L$(BENCHMARK_BUILD_DIR)/lib -lbenchmark -o $@
+	$(CXX) $(CXXFLAGS) $^ -lpthread -L$(BENCHMARK_BUILD_DIR)/lib -lbenchmark -o $@
 
 ulid_uint128_bench : ulid_uint128_bench.out
 	./$< --benchmark_out_format=console
@@ -95,10 +93,10 @@ ulid_uint128_bench : ulid_uint128_bench.out
 # Tasks for ulid_uint128_bench
 
 ulid_struct_bench.o : ulid_bench.cc $(BENCHMARK_BUILD_DIR)
-	$(CXX) $(CPPFLAGS) $(CXXFLAGS) -I$(BENCHMARK_BUILD_DIR)/include -c ulid_bench.cc -o $@
+	$(CXX) $(CXXFLAGS) -I$(BENCHMARK_BUILD_DIR)/include -c ulid_bench.cc -o $@
 
 ulid_struct_bench.out : ulid_struct_bench.o
-	$(CXX) $(CPPFLAGS) $(CXXFLAGS) $^ -lpthread -L$(BENCHMARK_BUILD_DIR)/lib -lbenchmark -o $@
+	$(CXX) $(CXXFLAGS) $^ -lpthread -L$(BENCHMARK_BUILD_DIR)/lib -lbenchmark -o $@
 
 ulid_struct_bench : ulid_struct_bench.out
 	./$< --benchmark_out_format=console
