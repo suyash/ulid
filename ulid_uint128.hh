@@ -129,42 +129,42 @@ void EncodeEntropyRand(ULID& ulid) {
 	ulid |= e;
 }
 
+std::uniform_int_distribution<uint8_t> Distribution_0_255(0, 255);
+
 // EncodeEntropyMt19937 will encode a ulid using std::mt19937
 //
 // It also creates a std::uniform_int_distribution to generate values in [0, 255]
 void EncodeEntropyMt19937(std::mt19937& generator, ULID& ulid) {
-	std::uniform_int_distribution<int> distribution(0, 255);
-
 	ulid = (ulid >> 80) << 80;
 
-	ULID e = distribution(generator);
+	ULID e = Distribution_0_255(generator);
 
 	e <<= 8;
-	e |= distribution(generator);
+	e |= Distribution_0_255(generator);
 
 	e <<= 8;
-	e |= distribution(generator);
+	e |= Distribution_0_255(generator);
 
 	e <<= 8;
-	e |= distribution(generator);
+	e |= Distribution_0_255(generator);
 
 	e <<= 8;
-	e |= distribution(generator);
+	e |= Distribution_0_255(generator);
 
 	e <<= 8;
-	e |= distribution(generator);
+	e |= Distribution_0_255(generator);
 
 	e <<= 8;
-	e |= distribution(generator);
+	e |= Distribution_0_255(generator);
 
 	e <<= 8;
-	e |= distribution(generator);
+	e |= Distribution_0_255(generator);
 
 	e <<= 8;
-	e |= distribution(generator);
+	e |= Distribution_0_255(generator);
 
 	e <<= 8;
-	e |= distribution(generator);
+	e |= Distribution_0_255(generator);
 
 	ulid |= e;
 }

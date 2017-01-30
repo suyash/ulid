@@ -297,22 +297,22 @@ void EncodeEntropyRand(ULID& ulid) {
 	ulid.data[15] = (std::rand() * 255ull) / RAND_MAX;
 }
 
+std::uniform_int_distribution<uint8_t> Distribution_0_255(0, 255);
+
 // EncodeEntropyMt19937 will encode a ulid using std::mt19937
 //
 // It also creates a std::uniform_int_distribution to generate values in [0, 255]
 void EncodeEntropyMt19937(std::mt19937& generator, ULID& ulid) {
-	std::uniform_int_distribution<int> distribution(0, 255);
-
-	ulid.data[6] = distribution(generator);
-	ulid.data[7] = distribution(generator);
-	ulid.data[8] = distribution(generator);
-	ulid.data[9] = distribution(generator);
-	ulid.data[10] = distribution(generator);
-	ulid.data[11] = distribution(generator);
-	ulid.data[12] = distribution(generator);
-	ulid.data[13] = distribution(generator);
-	ulid.data[14] = distribution(generator);
-	ulid.data[15] = distribution(generator);
+	ulid.data[6] = Distribution_0_255(generator);
+	ulid.data[7] = Distribution_0_255(generator);
+	ulid.data[8] = Distribution_0_255(generator);
+	ulid.data[9] = Distribution_0_255(generator);
+	ulid.data[10] = Distribution_0_255(generator);
+	ulid.data[11] = Distribution_0_255(generator);
+	ulid.data[12] = Distribution_0_255(generator);
+	ulid.data[13] = Distribution_0_255(generator);
+	ulid.data[14] = Distribution_0_255(generator);
+	ulid.data[15] = Distribution_0_255(generator);
 }
 
 // Encode will create an encoded ULID with a timestamp and a generator.
