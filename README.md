@@ -110,64 +110,64 @@ Extracts the timestamp used to create the ULID.
 
 ## Benchmarks
 
-From https://travis-ci.org/suyash/ulid/jobs/193279794
+From https://travis-ci.org/suyash/ulid/jobs/196587557
 
 **ulid_uint128**
 
 ```
 ./ulid_uint128_bench.out --benchmark_out_format=console
-Run on (32 X 2800.1 MHz CPU s)
-2017-01-19 05:16:59
+Run on (32 X 2800.27 MHz CPU s)
+2017-01-30 13:53:30
 Benchmark                         Time           CPU Iterations
 ---------------------------------------------------------------
-EncodeTime                       38 ns         38 ns   18927606
-EncodeTimeNow                    45 ns         42 ns   16704891
-EncodeTimeSystemClockNow        231 ns        228 ns    3026251
-EncodeEntropy                   393 ns        390 ns    1641169
-EncodeEntropyRand               211 ns        206 ns    3240195
-EncodeEntropyMt19937            920 ns        909 ns     801258
-Encode                          457 ns        452 ns    1573754
-EncodeNowRand                   255 ns        252 ns    2957128
-Create                          439 ns        429 ns    1659683
-CreateNowRand                   264 ns        254 ns    2679398
-MarshalTo                        75 ns         75 ns    9336127
-Marshal                         181 ns        181 ns    3728188
-MarshalBinaryTo                  33 ns         33 ns   19939924
-MarshalBinary                   293 ns        287 ns    2403615
-UnmarshalFrom                   121 ns        118 ns    6025547
-Unmarshal                       232 ns        220 ns    2876427
-UnmarshalBinaryFrom             107 ns        104 ns    7564454
-UnmarshalBinary                 410 ns        408 ns    1847557
-Time                             25 ns         24 ns   27947130
-CompareULIDs                     20 ns         20 ns   35872754
+EncodeTime                       20 ns         20 ns   33878597
+EncodeTimeNow                    22 ns         22 ns   32218636
+EncodeTimeSystemClockNow        153 ns        153 ns    4490317
+EncodeEntropy                   198 ns        198 ns    3562142
+EncodeEntropyRand               121 ns        121 ns    5780498
+EncodeEntropyMt19937            525 ns        525 ns    1331004
+Encode                          213 ns        213 ns    3290697
+EncodeNowRand                   139 ns        139 ns    5059356
+Create                          232 ns        232 ns    3028591
+CreateNowRand                   141 ns        141 ns    4943666
+MarshalTo                        39 ns         39 ns   18024722
+Marshal                          93 ns         93 ns    7460186
+MarshalBinaryTo                  19 ns         19 ns   37735347
+MarshalBinary                   133 ns        133 ns    5242484
+UnmarshalFrom                    68 ns         68 ns   10145291
+Unmarshal                       131 ns        129 ns    5659895
+UnmarshalBinaryFrom              64 ns         64 ns   10402550
+UnmarshalBinary                 216 ns        216 ns    3233510
+Time                             12 ns         12 ns   57538180
+CompareULIDs                     10 ns         10 ns   69390812
 ```
 
 **ulid_struct**
 
 ```
 ./ulid_struct_bench.out --benchmark_out_format=console
-Run on (32 X 2800.1 MHz CPU s)
-2017-01-19 05:17:21
+Run on (32 X 2800.27 MHz CPU s)
+2017-01-30 13:53:48
 Benchmark                         Time           CPU Iterations
 ---------------------------------------------------------------
-EncodeTime                       21 ns         21 ns   34823230
-EncodeTimeNow                    27 ns         27 ns   26231584
-EncodeTimeSystemClockNow        218 ns        214 ns    3208824
-EncodeEntropy                   380 ns        378 ns    1837909
-EncodeEntropyRand               303 ns        291 ns    2420240
-EncodeEntropyMt19937            911 ns        899 ns     800270
-Encode                          388 ns        381 ns    1840987
-EncodeNowRand                   324 ns        324 ns    2320273
-Create                          406 ns        405 ns    1805857
-CreateNowRand                   347 ns        343 ns    2017926
-MarshalTo                        84 ns         83 ns    8653849
-Marshal                         175 ns        173 ns    4034733
-MarshalBinaryTo                  35 ns         35 ns   20956150
-MarshalBinary                   258 ns        258 ns    2753799
-UnmarshalFrom                    75 ns         74 ns    9177808
-Unmarshal                       195 ns        194 ns    3927169
-UnmarshalBinaryFrom              36 ns         35 ns   20781593
-UnmarshalBinary                 317 ns        309 ns    2215915
-Time                             36 ns         35 ns   19426495
-CompareULIDs                     37 ns         35 ns   18717433
+EncodeTime                       11 ns         11 ns   68024343
+EncodeTimeNow                    14 ns         14 ns   53810497
+EncodeTimeSystemClockNow        141 ns        141 ns    5011618
+EncodeEntropy                   185 ns        185 ns    3756190
+EncodeEntropyRand               212 ns        212 ns    3289057
+EncodeEntropyMt19937            485 ns        485 ns    1442392
+Encode                          197 ns        197 ns    3562101
+EncodeNowRand                   220 ns        220 ns    3195564
+Create                          204 ns        204 ns    3404090
+CreateNowRand                   229 ns        229 ns    3057854
+MarshalTo                        41 ns         41 ns   17229969
+Marshal                          96 ns         96 ns    7278924
+MarshalBinaryTo                  19 ns         19 ns   37625620
+MarshalBinary                   134 ns        134 ns    5254147
+UnmarshalFrom                    38 ns         38 ns   18270269
+Unmarshal                        99 ns         99 ns    7048231
+UnmarshalBinaryFrom              19 ns         19 ns   37479143
+UnmarshalBinary                 175 ns        175 ns    4180657
+Time                             18 ns         18 ns   39717910
+CompareULIDs                     20 ns         20 ns   33980240
 ```
