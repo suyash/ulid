@@ -29,7 +29,11 @@ GTEST_SRCS_ = $(GTEST_DIR)/src/*.cc $(GTEST_DIR)/src/*.h $(GTEST_HEADERS)
 all : test bench
 
 clean :
-	rm -f $(TESTS) gtest.a gtest_main.a *.o *.out
+	rm -f *_test.o *_test.out *_bench.o *_bench.out
+
+clean-all : clean
+	rm -f gtest.a gtest_main.a
+	rm -rf $(BENCHMARK_BUILD_DIR)
 
 test : $(TESTS)
 
