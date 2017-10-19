@@ -203,7 +203,7 @@ void EncodeNowRand(ULID& ulid) {
  * Create will create a ULID with a timestamp and a generator.
  * */
 ULID Create(time_t timestamp, const std::function<uint8_t()>& rng) {
-	ULID ulid;
+	ULID ulid = 0;
 	Encode(timestamp, rng, ulid);
 	return ulid;
 }
@@ -212,7 +212,7 @@ ULID Create(time_t timestamp, const std::function<uint8_t()>& rng) {
  * CreateNowRand:EncodeNowRand = Create:Encode.
  * */
 ULID CreateNowRand() {
-	ULID ulid;
+	ULID ulid = 0;
 	EncodeNowRand(ulid);
 	return ulid;
 }
