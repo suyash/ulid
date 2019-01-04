@@ -1,7 +1,7 @@
 # Based on the Makefile in googletest/make
 
 # Points to the root of Google Test
-GTEST_DIR = vendor/googletest
+GTEST_DIR = vendor/googletest/googletest
 
 BENCHMARK_BUILD_DIR = vendor/benchmark_build
 
@@ -57,7 +57,7 @@ gtest_main.a : gtest-all.o gtest_main.o
 
 $(BENCHMARK_BUILD_DIR) : vendor/benchmark
 	cd $< \
-	&& cmake -DCMAKE_INSTALL_PREFIX=../../$@ -DCMAKE_BUILD_TYPE=Release . \
+	&& cmake -DBENCHMARK_ENABLE_GTEST_TESTS=OFF -DCMAKE_INSTALL_PREFIX=../../$@ -DCMAKE_BUILD_TYPE=Release . \
 	&& make \
 	&& make install
 

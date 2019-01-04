@@ -1,4 +1,4 @@
-#include <benchmark/benchmark_api.h>
+#include <benchmark/benchmark.h>
 
 #ifdef ULIDUINT128
 #include "ulid_uint128.hh"

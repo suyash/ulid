@@ -171,3 +171,11 @@ UnmarshalBinary                 175 ns        175 ns    4180657
 Time                             18 ns         18 ns   39717910
 CompareULIDs                     20 ns         20 ns   33980240
 ```
+
+## Hacking
+
+The library uses [googletest](https://github.com/google/googletest) for tests and [benchmark](https://github.com/google/benchmark) as benchmarks, which are built as submodules. In order to get those dependencies, clone recursively, i.e.
+
+```
+git clone -r https://github.com/suyash/ulid
+```
