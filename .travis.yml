@@ -6,17 +6,27 @@ matrix:
   include:
     - compiler: gcc
       os: linux
-      dist: trusty
+      dist: xenial
       addons:
         apt:
           sources:
             - ubuntu-toolchain-r-test
           packages:
-            - g++-5
-      env: COMPILER=g++-5
+            - g++-8
+      env: COMPILER=g++-8
     - compiler: gcc
       os: linux
-      dist: trusty
+      dist: xenial
+      addons:
+        apt:
+          sources:
+            - ubuntu-toolchain-r-test
+          packages:
+            - g++-7
+      env: COMPILER=g++-7
+    - compiler: gcc
+      os: linux
+      dist: xenial
       addons:
         apt:
           sources:
@@ -24,24 +34,50 @@ matrix:
           packages:
             - g++-6
       env: COMPILER=g++-6
+
     - compiler: clang
       os: linux
-      dist: trusty
+      dist: xenial
       addons:
         apt:
           sources:
             - ubuntu-toolchain-r-test
-            - llvm-toolchain-precise-3.8
+            - sourceline: 'deb http://apt.llvm.org/xenial/ llvm-toolchain-xenial main'
           packages:
-            - clang-3.8
-      env: COMPILER=clang++-3.8
+            - clang-8
+      env: COMPILER=clang++-8
+    - compiler: clang
+      os: linux
+      dist: xenial
+      addons:
+        apt:
+          sources:
+            - ubuntu-toolchain-r-test
+            - sourceline: 'deb http://apt.llvm.org/xenial/ llvm-toolchain-xenial-7 main'
+          packages:
+            - clang-7
+      env: COMPILER=clang++-7
+    - compiler: clang
+      os: linux
+      dist: xenial
+      addons:
+        apt:
+          sources:
+            - ubuntu-toolchain-r-test
+            - sourceline: 'deb http://apt.llvm.org/xenial/ llvm-toolchain-xenial-6.0 main'
+          packages:
+            - clang-6.0
+      env: COMPILER=clang++-6.0
 
     - compiler: clang
       os: osx
-      osx_image: 7.3.1
+      osx_image: xcode10.1
     - compiler: clang
       os: osx
-      osx_image: 8.2.1
+      osx_image: xcode9.4
+    - compiler: clang
+      os: osx
+      osx_image: xcode8.3
 
 before_script:
   - export CXX=${COMPILER-$CXX}
