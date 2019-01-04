@@ -18,7 +18,7 @@ typedef __uint128_t ULID;
  * EncodeTime will encode the first 6 bytes of a uint8_t array to the passed
  * timestamp
  * */
-void EncodeTime(time_t timestamp, ULID& ulid) {
+void EncodeTime(uint64_t timestamp, ULID& ulid) {
 	ULID t = static_cast<uint8_t>(timestamp >> 40);
 
 	t <<= 8;
