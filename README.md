@@ -110,67 +110,87 @@ Extracts the timestamp used to create the ULID.
 
 ## Benchmarks
 
-From https://travis-ci.org/suyash/ulid/jobs/196587557
+__Ubuntu Xenial (16.04), clang++-8__
+
+From https://travis-ci.org/suyash/ulid/jobs/475187043
 
 **ulid_uint128**
 
 ```
 ./ulid_uint128_bench.out --benchmark_out_format=console
-Run on (32 X 2800.27 MHz CPU s)
-2017-01-30 13:53:30
-Benchmark                         Time           CPU Iterations
----------------------------------------------------------------
-EncodeTime                       20 ns         20 ns   33878597
-EncodeTimeNow                    22 ns         22 ns   32218636
-EncodeTimeSystemClockNow        153 ns        153 ns    4490317
-EncodeEntropy                   198 ns        198 ns    3562142
-EncodeEntropyRand               121 ns        121 ns    5780498
-EncodeEntropyMt19937            525 ns        525 ns    1331004
-Encode                          213 ns        213 ns    3290697
-EncodeNowRand                   139 ns        139 ns    5059356
-Create                          232 ns        232 ns    3028591
-CreateNowRand                   141 ns        141 ns    4943666
-MarshalTo                        39 ns         39 ns   18024722
-Marshal                          93 ns         93 ns    7460186
-MarshalBinaryTo                  19 ns         19 ns   37735347
-MarshalBinary                   133 ns        133 ns    5242484
-UnmarshalFrom                    68 ns         68 ns   10145291
-Unmarshal                       131 ns        129 ns    5659895
-UnmarshalBinaryFrom              64 ns         64 ns   10402550
-UnmarshalBinary                 216 ns        216 ns    3233510
-Time                             12 ns         12 ns   57538180
-CompareULIDs                     10 ns         10 ns   69390812
+2019-01-04 07:11:24
+Running ./ulid_uint128_bench.out
+Run on (2 X 2500 MHz CPU s)
+CPU Caches:
+  L1 Data 32K (x1)
+  L1 Instruction 32K (x1)
+  L2 Unified 256K (x1)
+  L3 Unified 30720K (x1)
+Load Average: 0.98, 0.51, 0.21
+--------------------------------------------------------------------
+Benchmark                         Time             CPU   Iterations
+--------------------------------------------------------------------
+EncodeTime                     23.2 ns         23.2 ns     30323833
+EncodeTimeNow                  26.8 ns         26.7 ns     25925285
+EncodeTimeSystemClockNow       96.4 ns         96.4 ns      7366207
+EncodeEntropy                   209 ns          209 ns      3363959
+EncodeEntropyRand               100 ns          100 ns      6875073
+EncodeEntropyMt19937            470 ns          469 ns      1481254
+Encode                          231 ns          231 ns      3022655
+EncodeNowRand                   128 ns          128 ns      5346738
+Create                          238 ns          238 ns      2970710
+CreateNowRand                   133 ns          133 ns      5384520
+MarshalTo                      37.5 ns         37.5 ns     18655071
+Marshal                        83.7 ns         83.7 ns      8261322
+MarshalBinaryTo                16.7 ns         16.7 ns     41790384
+MarshalBinary                   157 ns          157 ns      4464307
+UnmarshalFrom                  64.0 ns         63.9 ns     10822292
+Unmarshal                       113 ns          113 ns      6146163
+UnmarshalBinaryFrom            64.8 ns         64.8 ns     10942429
+UnmarshalBinary                 248 ns          248 ns      2832217
+Time                           15.0 ns         15.0 ns     46389021
+CompareULIDs                   8.44 ns         8.44 ns     83106152
 ```
 
 **ulid_struct**
 
 ```
 ./ulid_struct_bench.out --benchmark_out_format=console
-Run on (32 X 2800.27 MHz CPU s)
-2017-01-30 13:53:48
-Benchmark                         Time           CPU Iterations
----------------------------------------------------------------
-EncodeTime                       11 ns         11 ns   68024343
-EncodeTimeNow                    14 ns         14 ns   53810497
-EncodeTimeSystemClockNow        141 ns        141 ns    5011618
-EncodeEntropy                   185 ns        185 ns    3756190
-EncodeEntropyRand               212 ns        212 ns    3289057
-EncodeEntropyMt19937            485 ns        485 ns    1442392
-Encode                          197 ns        197 ns    3562101
-EncodeNowRand                   220 ns        220 ns    3195564
-Create                          204 ns        204 ns    3404090
-CreateNowRand                   229 ns        229 ns    3057854
-MarshalTo                        41 ns         41 ns   17229969
-Marshal                          96 ns         96 ns    7278924
-MarshalBinaryTo                  19 ns         19 ns   37625620
-MarshalBinary                   134 ns        134 ns    5254147
-UnmarshalFrom                    38 ns         38 ns   18270269
-Unmarshal                        99 ns         99 ns    7048231
-UnmarshalBinaryFrom              19 ns         19 ns   37479143
-UnmarshalBinary                 175 ns        175 ns    4180657
-Time                             18 ns         18 ns   39717910
-CompareULIDs                     20 ns         20 ns   33980240
+2019-01-04 07:11:43
+Running ./ulid_struct_bench.out
+Run on (2 X 2500 MHz CPU s)
+CPU Caches:
+  L1 Data 32K (x1)
+  L1 Instruction 32K (x1)
+  L2 Unified 256K (x1)
+  L3 Unified 30720K (x1)
+Load Average: 0.99, 0.54, 0.22
+--------------------------------------------------------------------
+Benchmark                         Time             CPU   Iterations
+--------------------------------------------------------------------
+EncodeTime                     9.14 ns         9.13 ns     76851483
+EncodeTimeNow                  12.6 ns         12.6 ns     55315496
+EncodeTimeSystemClockNow       73.5 ns         73.5 ns      9515669
+EncodeEntropy                   201 ns          201 ns      3480980
+EncodeEntropyRand               196 ns          195 ns      3602452
+EncodeEntropyMt19937            449 ns          449 ns      1560469
+Encode                          211 ns          211 ns      3352107
+EncodeNowRand                   204 ns          204 ns      3493016
+Create                          217 ns          217 ns      3214903
+CreateNowRand                   213 ns          213 ns      3271363
+MarshalTo                      34.1 ns         34.1 ns     20540465
+Marshal                        80.6 ns         80.5 ns      8743422
+MarshalBinaryTo                17.6 ns         17.6 ns     39780449
+MarshalBinary                   154 ns          154 ns      4503322
+UnmarshalFrom                  33.3 ns         33.3 ns     20997275
+Unmarshal                      88.5 ns         88.4 ns      7957903
+UnmarshalBinaryFrom            17.0 ns         17.0 ns     41314026
+UnmarshalBinary                 198 ns          198 ns      3541637
+Time                           14.9 ns         14.9 ns     46747210
+CompareULIDs                   20.6 ns         20.6 ns     34150306
 ```
+
+For a comparison across latest 3 versions of g++ and clang++ on linux and clang++ on mac, see https://travis-ci.org/suyash/ulid/builds/475187039
 
 ## Hacking
 
