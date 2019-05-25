@@ -1,4 +1,5 @@
-#pragma once
+#ifndef ULID_HH
+#define ULID_HH
 
 // http://stackoverflow.com/a/23981011
 #ifdef __SIZEOF_INT128__
@@ -10,3 +11,5 @@
 #else
 #include "ulid_struct.hh"
 #endif // ULIDUINT128
+
+#endif // ULID_HH
