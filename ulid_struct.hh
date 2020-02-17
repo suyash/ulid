@@ -310,7 +310,7 @@ inline void EncodeEntropyRand(ULID& ulid) {
 	ulid.data[15] = (std::rand() * 255ull) / RAND_MAX;
 }
 
-static std::uniform_int_distribution<uint8_t> Distribution_0_255(0, 255);
+static std::uniform_int_distribution<uint32_t> Distribution_0_255(0, 255);
 
 /**
  * EncodeEntropyMt19937 will encode a ulid using std::mt19937
