@@ -8,7 +8,7 @@
 #include <random>
 #include <vector>
 
-#if #if _MSC_VER > 0
+#if _MSC_VER > 0
 typedef uint32_t rand_t;
 # else
 typedef uint8_t rand_t;
