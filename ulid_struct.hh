@@ -8,6 +8,12 @@
 #include <random>
 #include <vector>
 
+#if _MSC_VER > 0
+typedef uint32_t rand_t;
+# else
+typedef uint8_t rand_t;
+#endif
+
 namespace ulid {
 
 /**
@@ -298,19 +304,19 @@ inline void EncodeEntropy(const std::function<uint8_t()>& rng, ULID& ulid) {
  * std::rand returns values in [0, RAND_MAX]
  * */
 inline void EncodeEntropyRand(ULID& ulid) {
-	ulid.data[6] = (std::rand() * 255ull) / RAND_MAX;
-	ulid.data[7] = (std::rand() * 255ull) / RAND_MAX;
-	ulid.data[8] = (std::rand() * 255ull) / RAND_MAX;
-	ulid.data[9] = (std::rand() * 255ull) / RAND_MAX;
-	ulid.data[10] = (std::rand() * 255ull) / RAND_MAX;
-	ulid.data[11] = (std::rand() * 255ull) / RAND_MAX;
-	ulid.data[12] = (std::rand() * 255ull) / RAND_MAX;
-	ulid.data[13] = (std::rand() * 255ull) / RAND_MAX;
-	ulid.data[14] = (std::rand() * 255ull) / RAND_MAX;
-	ulid.data[15] = (std::rand() * 255ull) / RAND_MAX;
+	ulid.data[6] = (uint8_t)(std::rand() * 255ull) / RAND_MAX;
+	ulid.data[7] = (uint8_t)(std::rand() * 255ull) / RAND_MAX;
+	ulid.data[8] = (uint8_t)(std::rand() * 255ull) / RAND_MAX;
+	ulid.data[9] = (uint8_t)(std::rand() * 255ull) / RAND_MAX;
+	ulid.data[10] = (uint8_t)(std::rand() * 255ull) / RAND_MAX;
+	ulid.data[11] = (uint8_t)(std::rand() * 255ull) / RAND_MAX;
+	ulid.data[12] = (uint8_t)(std::rand() * 255ull) / RAND_MAX;
+	ulid.data[13] = (uint8_t)(std::rand() * 255ull) / RAND_MAX;
+	ulid.data[14] = (uint8_t)(std::rand() * 255ull) / RAND_MAX;
+	ulid.data[15] = (uint8_t)(std::rand() * 255ull) / RAND_MAX;
 }
 
-static std::uniform_int_distribution<uint8_t> Distribution_0_255(0, 255);
+static std::uniform_int_distribution<rand_t> Distribution_0_255(0, 255);
 
 /**
  * EncodeEntropyMt19937 will encode a ulid using std::mt19937

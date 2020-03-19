@@ -8,6 +8,12 @@
 #include <random>
 #include <vector>
 
+#if _MSC_VER > 0
+typedef uint32_t rand_t;
+# else
+typedef uint8_t rand_t;
+#endif
+
 namespace ulid {
 
 /**
@@ -142,7 +148,7 @@ inline void EncodeEntropyRand(ULID& ulid) {
 	ulid |= e;
 }
 
-static std::uniform_int_distribution<uint8_t> Distribution_0_255(0, 255);
+static std::uniform_int_distribution<rand_t> Distribution_0_255(0, 255);
 
 /**
  * EncodeEntropyMt19937 will encode a ulid using std::mt19937
