@@ -256,12 +256,29 @@ struct ULID {
  * timestamp
  * */
 inline void EncodeTime(time_t timestamp, ULID& ulid) {
-	ulid.data[0] = static_cast<uint8_t>(timestamp >> 40);
-	ulid.data[1] = static_cast<uint8_t>(timestamp >> 32);
-	ulid.data[2] = static_cast<uint8_t>(timestamp >> 24);
-	ulid.data[3] = static_cast<uint8_t>(timestamp >> 16);
-	ulid.data[4] = static_cast<uint8_t>(timestamp >> 8);
-	ulid.data[5] = static_cast<uint8_t>(timestamp);
+    // NOTE: if we don't user ulid_uint128.hh it can meas
+    // that we user and old 32-bits platform. and time_t
+    // will be presented as int32_t or less size data type;
+    if ( sizeof( time_t ) > 6 ) {
+        // the prefered implementation for the biggest time range
+	    ulid.data[0] = static_cast<uint8_t>(timestamp >> 40);
+	    ulid.data[1] = static_cast<uint8_t>(timestamp >> 32);
+	    ulid.data[2] = static_cast<uint8_t>(timestamp >> 24);
+	    ulid.data[3] = static_cast<uint8_t>(timestamp >> 16);
+	    ulid.data[4] = static_cast<uint8_t>(timestamp >> 8);
+	    ulid.data[5] = static_cast<uint8_t>(timestamp);
+        return;
+    }
+    
+    if ( sizeof( time_t ) >= 4 ) {
+	    ulid.data[2] = static_cast<uint8_t>(timestamp >> 24);
+	    ulid.data[3] = static_cast<uint8_t>(timestamp >> 16);
+	    ulid.data[4] = static_cast<uint8_t>(timestamp >> 8);
+	    ulid.data[5] = static_cast<uint8_t>(timestamp);
+        return;
+    }
+    
+    static_assert( false, "A platform unsupported by ULID!" );
 }
 
 /**
@@ -304,16 +321,16 @@ inline void EncodeEntropy(const std::function<uint8_t()>& rng, ULID& ulid) {
  * std::rand returns values in [0, RAND_MAX]
  * */
 inline void EncodeEntropyRand(ULID& ulid) {
-	ulid.data[6] = (uint8_t)(std::rand() * 255ull) / RAND_MAX;
-	ulid.data[7] = (uint8_t)(std::rand() * 255ull) / RAND_MAX;
-	ulid.data[8] = (uint8_t)(std::rand() * 255ull) / RAND_MAX;
-	ulid.data[9] = (uint8_t)(std::rand() * 255ull) / RAND_MAX;
-	ulid.data[10] = (uint8_t)(std::rand() * 255ull) / RAND_MAX;
-	ulid.data[11] = (uint8_t)(std::rand() * 255ull) / RAND_MAX;
-	ulid.data[12] = (uint8_t)(std::rand() * 255ull) / RAND_MAX;
-	ulid.data[13] = (uint8_t)(std::rand() * 255ull) / RAND_MAX;
-	ulid.data[14] = (uint8_t)(std::rand() * 255ull) / RAND_MAX;
-	ulid.data[15] = (uint8_t)(std::rand() * 255ull) / RAND_MAX;
+	ulid.data[6] = std::rand() & 0xFF;
+	ulid.data[7] = std::rand() & 0xFF;
+	ulid.data[8] = std::rand() & 0xFF;
+	ulid.data[9] = std::rand() & 0xFF;
+	ulid.data[10] = std::rand() & 0xFF;
+	ulid.data[11] = std::rand() & 0xFF;
+	ulid.data[12] = std::rand() & 0xFF;
+	ulid.data[13] = std::rand() & 0xFF;
+	ulid.data[14] = std::rand() & 0xFF;
+	ulid.data[15] = std::rand() & 0xFF;
 }
 
 static std::uniform_int_distribution<rand_t> Distribution_0_255(0, 255);
