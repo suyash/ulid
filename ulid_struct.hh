@@ -259,26 +259,13 @@ inline void EncodeTime(time_t timestamp, ULID& ulid) {
     // NOTE: if we don't use ulid_uint128.hh it can meas
     // that we use and old 32-bits platform. and time_t
     // will be presented as int32_t or less size data type;
-    if ( sizeof( time_t ) > 6 ) {
-        // the prefered implementation for the biggest time range
-	    ulid.data[0] = static_cast<uint8_t>(timestamp >> 40);
-	    ulid.data[1] = static_cast<uint8_t>(timestamp >> 32);
-	    ulid.data[2] = static_cast<uint8_t>(timestamp >> 24);
-	    ulid.data[3] = static_cast<uint8_t>(timestamp >> 16);
-	    ulid.data[4] = static_cast<uint8_t>(timestamp >> 8);
-	    ulid.data[5] = static_cast<uint8_t>(timestamp);
-        return;
-    }
-    
-    if ( sizeof( time_t ) >= 4 ) {
-	    ulid.data[2] = static_cast<uint8_t>(timestamp >> 24);
-	    ulid.data[3] = static_cast<uint8_t>(timestamp >> 16);
-	    ulid.data[4] = static_cast<uint8_t>(timestamp >> 8);
-	    ulid.data[5] = static_cast<uint8_t>(timestamp);
-        return;
-    }
-    
-    static_assert( false, "A platform unsupported by ULID!" );
+	const int _sz = static_cast<int>(sizeof(time_t));
+	// 6th bit of timestamp has index 5
+	const int last_index = std::min( 5, _sz - 1 );
+	for ( int index = 0; index <= last_index; ++index ) {
+		// NOTE: `index<<3` means `index*8`: {40, 32, 24, 16, 8, 0}
+		ulid.data[last_index-index]=(timestamp >>(index<<3));
+	}
 }
 
 /**
