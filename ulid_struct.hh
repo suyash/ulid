@@ -256,8 +256,8 @@ struct ULID {
  * timestamp
  * */
 inline void EncodeTime(time_t timestamp, ULID& ulid) {
-    // NOTE: if we don't user ulid_uint128.hh it can meas
-    // that we user and old 32-bits platform. and time_t
+    // NOTE: if we don't use ulid_uint128.hh it can meas
+    // that we use and old 32-bits platform. and time_t
     // will be presented as int32_t or less size data type;
     if ( sizeof( time_t ) > 6 ) {
         // the prefered implementation for the biggest time range
