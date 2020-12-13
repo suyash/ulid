@@ -1,0 +1,24 @@
+# https://github.com/google/benchmark/blob/master/.github/workflows/build-and-test.yml
+
+on:
+  push:
+    branches: [ master ]
+  pull_request:
+    branches: [ master ]
+
+jobs:
+  job:
+    name: ${{ matrix.os }}
+    runs-on: ${{ matrix.os }}
+    strategy:
+      matrix:
+        os: [ubuntu-latest, macos-latest, windows-latest]
+    steps:
+      - uses: actions/checkout@v2
+
+      - uses: suyash/actions-bazelisk@v1
+
+      - run: bazel run //:ulid_bench_uint128
+      - run: bazel run //:ulid_bench_struct
+      - run: bazel test //:ulid_test_uint128
+      - run: bazel test //:ulid_test_struct
