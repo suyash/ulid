@@ -1,0 +1,53 @@
+load("@rules_cc//cc:defs.bzl", "cc_binary", "cc_library", "cc_test")
+
+cc_library(
+    name = "ulid_uint128",
+    srcs = ["src/ulid_uint128.hh"],
+)
+
+cc_library(
+    name = "ulid_struct",
+    srcs = ["src/ulid_struct.hh"],
+)
+
+# benchmarks
+
+cc_binary(
+    name = "ulid_bench_uint128",
+    srcs = ["src/ulid_bench.cc"],
+    defines = ["ULIDUINT128"],
+    deps = [
+        ":ulid_uint128",
+        "//vendor/benchmark",
+    ],
+)
+
+cc_binary(
+    name = "ulid_bench_struct",
+    srcs = ["src/ulid_bench.cc"],
+    deps = [
+        ":ulid_struct",
+        "//vendor/benchmark",
+    ],
+)
+
+# tests
+
+cc_test(
+    name = "ulid_test_uint128",
+    srcs = ["src/ulid_test.cc"],
+    defines = ["ULIDUINT128"],
+    deps = [
+        ":ulid_uint128",
+        "//vendor/googletest:gtest_main",
+    ],
+)
+
+cc_test(
+    name = "ulid_test_struct",
+    srcs = ["src/ulid_test.cc"],
+    deps = [
+        ":ulid_struct",
+        "//vendor/googletest:gtest_main",
+    ],
+)
