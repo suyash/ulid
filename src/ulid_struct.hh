@@ -304,16 +304,16 @@ inline void EncodeEntropy(const std::function<uint8_t()>& rng, ULID& ulid) {
  * std::rand returns values in [0, RAND_MAX]
  * */
 inline void EncodeEntropyRand(ULID& ulid) {
-	ulid.data[6] = (uint8_t)(std::rand() * 255ull) / RAND_MAX;
-	ulid.data[7] = (uint8_t)(std::rand() * 255ull) / RAND_MAX;
-	ulid.data[8] = (uint8_t)(std::rand() * 255ull) / RAND_MAX;
-	ulid.data[9] = (uint8_t)(std::rand() * 255ull) / RAND_MAX;
-	ulid.data[10] = (uint8_t)(std::rand() * 255ull) / RAND_MAX;
-	ulid.data[11] = (uint8_t)(std::rand() * 255ull) / RAND_MAX;
-	ulid.data[12] = (uint8_t)(std::rand() * 255ull) / RAND_MAX;
-	ulid.data[13] = (uint8_t)(std::rand() * 255ull) / RAND_MAX;
-	ulid.data[14] = (uint8_t)(std::rand() * 255ull) / RAND_MAX;
-	ulid.data[15] = (uint8_t)(std::rand() * 255ull) / RAND_MAX;
+	ulid.data[6] = static_cast<uint8_t>((std::rand() * 255ull) / RAND_MAX);
+	ulid.data[7] = static_cast<uint8_t>((std::rand() * 255ull) / RAND_MAX);
+	ulid.data[8] = static_cast<uint8_t>((std::rand() * 255ull) / RAND_MAX);
+	ulid.data[9] = static_cast<uint8_t>((std::rand() * 255ull) / RAND_MAX);
+	ulid.data[10] = static_cast<uint8_t>((std::rand() * 255ull) / RAND_MAX);
+	ulid.data[11] = static_cast<uint8_t>((std::rand() * 255ull) / RAND_MAX);
+	ulid.data[12] = static_cast<uint8_t>((std::rand() * 255ull) / RAND_MAX);
+	ulid.data[13] = static_cast<uint8_t>((std::rand() * 255ull) / RAND_MAX);
+	ulid.data[14] = static_cast<uint8_t>((std::rand() * 255ull) / RAND_MAX);
+	ulid.data[15] = static_cast<uint8_t>((std::rand() * 255ull) / RAND_MAX);
 }
 
 static std::uniform_int_distribution<rand_t> Distribution_0_255(0, 255);
