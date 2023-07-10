@@ -3,7 +3,7 @@ load("@rules_cc//cc:defs.bzl", "cc_binary", "cc_library", "cc_test")
 cc_library(
     name = "ulid_uint128",
     srcs = ["src/ulid_uint128.hh"],
-    visibility = "//visibility:public",
+    visibility = ["//visibility:public"],
 )
 
 cc_library(
